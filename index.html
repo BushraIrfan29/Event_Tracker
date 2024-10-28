@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Event Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #8787b6;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .event-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .event-form input[type="text"],
+        .event-form input[type="date"],
+        .event-form select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .event-form button {
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color:#6b6b99;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .event-list {
+            list-style: none;
+            padding: 0;
+        }
+        .event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+        .event-item button {
+            background: #dc3545;
+            border: none;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Personal Event Tracker</h2>
+    <div class="event-form">
+        <input type="text" id="eventInput" placeholder="Event title" />
+        <input type="date" id="eventDate" />
+        <select id="eventType">
+            <option value="Meeting">Meeting</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Anniversary">Anniversary</option>
+            <option value="Other">Other</option>
+        </select>
+        <button onclick="addEvent()">Add Event</button>
+    </div>
+    <ul id="eventList" class="event-list"></ul>
+</div>
+
+<script>
+    function addEvent() {
+        const eventInput = document.getElementById('eventInput');
+        const eventDate = document.getElementById('eventDate');
+        const eventType = document.getElementById('eventType');
+        const eventText = eventInput.value.trim();
+        const dateText = eventDate.value;
+        const typeText = eventType.value;
+
+        if (eventText === "" || dateText === "") {
+            alert("Please enter an event title and date!");
+            return;
+        }
+
+        const eventList = document.getElementById('eventList');
+        const eventItem = document.createElement('li');
+        eventItem.className = 'event-item';
+
+        eventItem.innerHTML = `
+            <span><strong>${eventText}</strong> (${typeText}) - ${dateText}</span>
+            <button onclick="deleteEvent(this)">Delete</button>
+        `;
+
+        eventList.appendChild(eventItem);
+        eventInput.value = "";
+        eventDate.value = "";
+    }
+
+    function deleteEvent(button) {
+        const eventItem = button.parentNode;
+        eventItem.remove();
+    }
+</script>
+
+</body>
+</html>
